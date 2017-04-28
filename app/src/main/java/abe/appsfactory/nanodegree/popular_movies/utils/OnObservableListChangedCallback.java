@@ -3,10 +3,6 @@ package abe.appsfactory.nanodegree.popular_movies.utils;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * Created by APPSfactory on 15.10.2016.
- */
-
 public class OnObservableListChangedCallback extends ObservableList.OnListChangedCallback {
     private final RecyclerView.Adapter<?> mAdapter;
 

@@ -9,7 +9,7 @@ import abe.appsfactory.nanodegree.popular_movies.BuildConfig;
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel;
 
 @SuppressWarnings("unused")
-public class MovieDetailsModel extends MoviePosterModel implements Parcelable{
+public class MovieDetailsModel extends MoviePosterModel implements Parcelable {
     @SerializedName("poster_path")
     private String mPosterPath;
 
@@ -40,7 +40,7 @@ public class MovieDetailsModel extends MoviePosterModel implements Parcelable{
     @SerializedName("vote_average")
     private float mVoteAverage;
 
-    protected MovieDetailsModel(Parcel in) {
+    private MovieDetailsModel(Parcel in) {
         mPosterPath = in.readString();
         mAdult = in.readByte() != 0;
         mOverview = in.readString();

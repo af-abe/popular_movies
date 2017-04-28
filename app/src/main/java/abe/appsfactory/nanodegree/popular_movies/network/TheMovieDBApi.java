@@ -18,6 +18,7 @@ import abe.appsfactory.nanodegree.popular_movies.network.models.PopularMoviesRes
 
 public class TheMovieDBApi {
 
+    @SuppressWarnings("TryWithIdenticalCatches")
     public static PopularMoviesResponseModel getPopularMovies(boolean popular) {
         String enpPoint = popular ? "popular" : "top_rated";
         try {

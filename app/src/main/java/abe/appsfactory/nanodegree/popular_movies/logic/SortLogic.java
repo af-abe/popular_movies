@@ -2,20 +2,16 @@ package abe.appsfactory.nanodegree.popular_movies.logic;
 
 import android.content.Context;
 
-/**
- * Created by André on 28.04.2017.
- */
-
 public class SortLogic {
     public static final int SORT_POPULAR = 0;
     public static final int SORT_RATED = 1;
 
-    public static final String SETTINGS_SORT = "settings.sort";
+    private static final String SETTINGS_SORT = "settings.sort";
 
     private static SortLogic ourInstance;
 
     public static SortLogic getInstance(Context context) {
-        if(ourInstance == null){
+        if (ourInstance == null) {
             ourInstance = new SortLogic(context);
         }
         return ourInstance;
