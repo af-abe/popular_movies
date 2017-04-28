@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import abe.appsfactory.nanodegree.popular_movies.DetailActivity;
+import abe.appsfactory.nanodegree.popular_movies.ui.activities.DetailActivity;
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.network.models.MovieDetailsModel;
 

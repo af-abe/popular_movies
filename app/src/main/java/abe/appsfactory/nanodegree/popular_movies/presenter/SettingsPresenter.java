@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 
-import abe.appsfactory.nanodegree.popular_movies.MainActivity;
 import abe.appsfactory.nanodegree.popular_movies.logic.SortLogic;
 
 public class SettingsPresenter extends BaseObservable {

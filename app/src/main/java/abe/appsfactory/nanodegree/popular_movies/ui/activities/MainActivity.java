@@ -1,4 +1,4 @@
-package abe.appsfactory.nanodegree.popular_movies;
+package abe.appsfactory.nanodegree.popular_movies.ui.activities;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.ActivityMainBinding;
 import abe.appsfactory.nanodegree.popular_movies.presenter.MainPresenter;
 import abe.appsfactory.nanodegree.popular_movies.ui.adapter.MovieGridRecyclerAdapter;

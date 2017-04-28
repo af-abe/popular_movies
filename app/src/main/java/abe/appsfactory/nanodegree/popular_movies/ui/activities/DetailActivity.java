@@ -1,9 +1,10 @@
-package abe.appsfactory.nanodegree.popular_movies;
+package abe.appsfactory.nanodegree.popular_movies.ui.activities;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.ActivityDetailBinding;
 import abe.appsfactory.nanodegree.popular_movies.network.models.MovieDetailsModel;
 import abe.appsfactory.nanodegree.popular_movies.presenter.DetailPresenter;

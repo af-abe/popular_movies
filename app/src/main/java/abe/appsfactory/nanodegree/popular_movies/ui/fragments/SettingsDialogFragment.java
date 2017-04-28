@@ -1,7 +1,6 @@
 package abe.appsfactory.nanodegree.popular_movies.ui.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import abe.appsfactory.nanodegree.popular_movies.MainActivity;
+import abe.appsfactory.nanodegree.popular_movies.ui.activities.MainActivity;
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.DialogSettingsBinding;
 import abe.appsfactory.nanodegree.popular_movies.presenter.SettingsPresenter;
