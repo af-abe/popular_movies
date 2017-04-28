@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel"/>
+    </data>
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+               app:imageUrl="@{item.posterUrl}"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:src="@drawable/placeholder"
+               android:scaleType="centerCrop"
+               android:onClick="@{() -> item.onClick(context)}"
+               android:adjustViewBounds="true"
+               tools:ignore="ContentDescription"/>
+</layout>

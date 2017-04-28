@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="presenter"
+            type="abe.appsfactory.nanodegree.popular_movies.presenter.SettingsPresenter"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@android:color/white"
+                  android:orientation="vertical">
+
+        <TextView
+            style="@style/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/settings"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="350dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Sorting:"/>
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/pop"
+                    android:checked="@={presenter.mPopular}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="most popular"/>
+
+                <RadioButton
+                    android:checked="@={presenter.mRated}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="highest-rated"/>
+            </RadioGroup>
+
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="accept"
+                android:onClick="@{() -> presenter.onAccept(context)}"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/colorPrimary"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="dismiss"
+                android:onClick="@{() -> presenter.onDismiss()}"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
