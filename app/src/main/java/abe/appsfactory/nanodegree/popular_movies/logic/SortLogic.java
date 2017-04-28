@@ -39,4 +39,5 @@ public class SortLogic {
                 .putInt(SETTINGS_SORT, mSort)
                 .apply();
     }
+
 }

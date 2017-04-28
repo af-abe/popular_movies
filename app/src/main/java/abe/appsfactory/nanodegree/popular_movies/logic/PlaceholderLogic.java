@@ -8,7 +8,7 @@ import abe.appsfactory.nanodegree.popular_movies.network.models.PopularMoviesRes
  */
 
 public class PlaceholderLogic {
-    public static PopularMoviesResponseModel getMovies(){
-        return TheMovieDBApi.getPopularMovies();
+    public static PopularMoviesResponseModel getMovies(boolean popular){
+        return TheMovieDBApi.getPopularMovies(popular);
     }
 }

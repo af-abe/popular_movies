@@ -11,12 +11,15 @@ import abe.appsfactory.nanodegree.popular_movies.network.models.PopularMoviesRes
  */
 
 public class MovieLoader extends AsyncTaskLoader<PopularMoviesResponseModel> {
-    public MovieLoader(Context context) {
+    private final boolean popular;
+    public MovieLoader(Context context, boolean popular)
+    {
         super(context);
+        this.popular = popular;
     }
 
     @Override
     public PopularMoviesResponseModel loadInBackground() {
-        return PlaceholderLogic.getMovies();
+        return PlaceholderLogic.getMovies(popular);
     }
 }

@@ -18,9 +18,10 @@ import abe.appsfactory.nanodegree.popular_movies.network.models.PopularMoviesRes
 
 public class TheMovieDBApi {
 
-    public static PopularMoviesResponseModel getPopularMovies(){
+    public static PopularMoviesResponseModel getPopularMovies(boolean popular) {
+        String enpPoint = popular ? "popular" : "top_rated";
         try {
-            URL url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=0c9cff05f89c6179d1e5dd31609dfa8d");
+            URL url = new URL("http://api.themoviedb.org/3/movie/" + enpPoint + "?api_key=0c9cff05f89c6179d1e5dd31609dfa8d");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
@@ -29,7 +30,7 @@ public class TheMovieDBApi {
             connection.connect();
 
             int responseCode = connection.getResponseCode();
-            if(responseCode >= 200 && responseCode < 300){
+            if (responseCode >= 200 && responseCode < 300) {
                 Gson gson = new Gson();
                 InputStream is = connection.getInputStream();
                 Reader reader = new InputStreamReader(is);

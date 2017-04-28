@@ -24,14 +24,14 @@ public class SettingsPresenter extends BaseObservable {
     }
 
     public void onAccept(Context context) {
-        if (mEvents != null) {
-            mEvents.onAccept();
-        }
-
         if(mPopular.get()){
             SortLogic.getInstance(context).setSort(context, SortLogic.SORT_POPULAR);
         } else {
             SortLogic.getInstance(context).setSort(context, SortLogic.SORT_RATED);
+        }
+
+        if (mEvents != null) {
+            mEvents.onAccept();
         }
     }
 
