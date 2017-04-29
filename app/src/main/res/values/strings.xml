@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="settings">Settings</string>
+    <string name="error">Ops, something went wrong</string>
+    <string name="error_dialog_msg">Ops, something went wrong. Check your internet connection and try again</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_button">retry</string>
 </resources>
