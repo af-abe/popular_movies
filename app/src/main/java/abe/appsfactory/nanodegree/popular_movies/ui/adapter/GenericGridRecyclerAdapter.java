@@ -1,24 +1,27 @@
 package abe.appsfactory.nanodegree.popular_movies.ui.adapter;
 
+import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.LayoutRes;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import abe.appsfactory.nanodegree.popular_movies.BR;
-import abe.appsfactory.nanodegree.popular_movies.R;
-import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel;
 import abe.appsfactory.nanodegree.popular_movies.utils.OnObservableListChangedCallback;
 
-public class MovieGridRecyclerAdapter extends RecyclerView.Adapter<MovieGridRecyclerAdapter.MovieGridViewHolder>{
-    private final ObservableArrayList<MoviePosterModel> mItems;
+public class GenericGridRecyclerAdapter<T extends BaseObservable> extends RecyclerView.Adapter<GenericGridRecyclerAdapter.ViewHolder>{
+    private final ObservableArrayList<T> mItems;
+    private final int mLayout;
     private OnObservableListChangedCallback mChangeObserver;
 
-    public MovieGridRecyclerAdapter(ObservableArrayList<MoviePosterModel> items) {
+    public GenericGridRecyclerAdapter(ObservableArrayList<T> items, @LayoutRes int layout) {
         mItems = items;
+        mLayout = layout;
     }
 
     @Override
@@ -28,6 +31,7 @@ public class MovieGridRecyclerAdapter extends RecyclerView.Adapter<MovieGridRecy
             mChangeObserver = new OnObservableListChangedCallback(this);
             mItems.addOnListChangedCallback(mChangeObserver);
         }
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
     }
 
     @Override
@@ -40,13 +44,13 @@ public class MovieGridRecyclerAdapter extends RecyclerView.Adapter<MovieGridRecy
     }
 
     @Override
-    public MovieGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MovieGridViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_grid, parent, false));
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MovieGridViewHolder holder, int position) {
-        MoviePosterModel item = mItems.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        T item = mItems.get(position);
         holder.binding.setVariable(BR.item, item);
         holder.binding.executePendingBindings();
     }
@@ -56,11 +60,11 @@ public class MovieGridRecyclerAdapter extends RecyclerView.Adapter<MovieGridRecy
         return mItems.size();
     }
 
-    static class MovieGridViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         int itemId;
         ViewDataBinding binding;
 
-        MovieGridViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             this.itemId = BR.item;
             binding = DataBindingUtil.bind(itemView);

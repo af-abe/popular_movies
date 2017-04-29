@@ -1,8 +1,8 @@
 package abe.appsfactory.nanodegree.popular_movies.ui.activities;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -12,13 +12,14 @@ import android.view.MenuItem;
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.ActivityMainBinding;
 import abe.appsfactory.nanodegree.popular_movies.presenter.MainPresenter;
-import abe.appsfactory.nanodegree.popular_movies.ui.adapter.MovieGridRecyclerAdapter;
+import abe.appsfactory.nanodegree.popular_movies.ui.adapter.GenericGridRecyclerAdapter;
 import abe.appsfactory.nanodegree.popular_movies.ui.fragments.SettingsDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private MainPresenter mPresenter;
     ActivityMainBinding mBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +30,13 @@ public class MainActivity extends AppCompatActivity {
         mBinding.setPresenter(mPresenter);
 
 
-
         setupMovieGridView(mBinding.movieGrid);
 
         mPresenter.loadMovies(this, getSupportLoaderManager());
     }
 
-    private void setupMovieGridView(RecyclerView recyclerView){
-        recyclerView.setAdapter(new MovieGridRecyclerAdapter(mPresenter.getItems()));
+    private void setupMovieGridView(RecyclerView recyclerView) {
+        recyclerView.setAdapter(new GenericGridRecyclerAdapter<>(mPresenter.getItems(), R.layout.item_movie_grid));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         new SettingsDialogFragment().show(getSupportFragmentManager(), null);
     }
 
-    public void notifySort(){
+    public void notifySort() {
         mPresenter.loadMovies(this, getSupportLoaderManager());
     }
 }
