@@ -4,15 +4,15 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableInt;
-import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import abe.appsfactory.nanodegree.popular_movies.R;
+import abe.appsfactory.nanodegree.popular_movies.logic.PlaceholderLogic;
 import abe.appsfactory.nanodegree.popular_movies.logic.SortLogic;
-import abe.appsfactory.nanodegree.popular_movies.network.models.PopularMoviesResponseModel;
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel;
-import abe.appsfactory.nanodegree.popular_movies.utils.MovieLoader;
+import abe.appsfactory.nanodegree.popular_movies.utils.AsyncOperation;
 
 
 public class MainPresenter extends BaseObservable {
@@ -26,24 +26,24 @@ public class MainPresenter extends BaseObservable {
 
     public void loadMovies(final Context context, LoaderManager supportLoaderManager) {
         mLoadingVisibility.set(View.VISIBLE);
-        supportLoaderManager.restartLoader(LOADER_ID, null, new LoaderManager.LoaderCallbacks<PopularMoviesResponseModel>() {
-            @Override
-            public Loader<PopularMoviesResponseModel> onCreateLoader(int id, Bundle args) {
-                boolean popular = SortLogic.getInstance(context).getSort() == SortLogic.SORT_POPULAR;
-                return new MovieLoader(context, popular);
-            }
 
-            @Override
-            public void onLoadFinished(Loader<PopularMoviesResponseModel> loader, PopularMoviesResponseModel data) {
-                mLoadingVisibility.set(View.GONE);
-                mItems.clear();
-                mItems.addAll(data.getPopularMovies());
-            }
-
-            @Override
-            public void onLoaderReset(Loader<PopularMoviesResponseModel> loader) {
-
-            }
-        }).forceLoad();
+        new AsyncOperation<>(context, supportLoaderManager, LOADER_ID, () -> {
+            boolean popular = SortLogic.getInstance(context).getSort() == SortLogic.SORT_POPULAR;
+            return PlaceholderLogic.getMovies(popular);
+        }).setOnSuccess(data -> {
+            mLoadingVisibility.set(View.GONE);
+            mItems.clear();
+            mItems.addAll(data.getPopularMovies());
+        }).setOnError(throwable -> {
+            mLoadingVisibility.set(View.GONE);
+            new AlertDialog.Builder(context)
+                    .setMessage(R.string.error_dialog_msg)
+                    .setTitle(R.string.error_dialog_title)
+                    .setPositiveButton(R.string.error_dialog_button, (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                        loadMovies(context, supportLoaderManager);
+                    }).setCancelable(false)
+                    .show();
+        }).execute();
     }
 }

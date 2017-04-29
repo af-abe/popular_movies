@@ -6,7 +6,7 @@ import abe.appsfactory.nanodegree.popular_movies.network.models.PopularMoviesRes
 import abe.appsfactory.nanodegree.popular_movies.network.models.APITrailerResults;
 
 public class PlaceholderLogic {
-    public static PopularMoviesResponseModel getMovies(boolean popular) {
+    public static PopularMoviesResponseModel getMovies(boolean popular) throws Exception {
         return TheMovieDBApi.getMovies(popular);
     }
 
