@@ -1,8 +1,10 @@
 package abe.appsfactory.nanodegree.popular_movies.ui.activities;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.ActivityDetailBinding;
@@ -16,8 +18,19 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        MovieDetailsModel model = getIntent().getExtras().getParcelable(EXTRA_DETAIL_MODEL);
-        mPresenter = new DetailPresenter(model);
-        binding.setPresenter(mPresenter);
+        Intent intent = getIntent();
+        if(intent != null && intent.hasExtra(EXTRA_DETAIL_MODEL)) {
+            MovieDetailsModel model = getIntent().getExtras().getParcelable(EXTRA_DETAIL_MODEL);
+            mPresenter = new DetailPresenter(model);
+            binding.setPresenter(mPresenter);
+        } else {
+            Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter = null;
     }
 }
