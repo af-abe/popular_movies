@@ -19,7 +19,7 @@ class APIReviewModel extends ReviewModel implements Parcelable{
     @SerializedName("url")
     private String url;
 
-    protected APIReviewModel(Parcel in) {
+    private APIReviewModel(Parcel in) {
         id = in.readString();
         author = in.readString();
         content = in.readString();

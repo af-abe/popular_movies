@@ -11,16 +11,17 @@ import android.view.View;
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.logic.PlaceholderLogic;
 import abe.appsfactory.nanodegree.popular_movies.logic.SortLogic;
-import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel;
+import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
+import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterItemPresenter;
 import abe.appsfactory.nanodegree.popular_movies.utils.AsyncOperation;
 
 
 public class MainPresenter extends BaseObservable {
     private static final int LOADER_ID = 0;
-    private ObservableArrayList<MoviePosterModel> mItems = new ObservableArrayList<>();
+    private ObservableArrayList<MoviePosterItemPresenter> mItems = new ObservableArrayList<>();
     public ObservableInt mLoadingVisibility = new ObservableInt(View.GONE);
 
-    public ObservableArrayList<MoviePosterModel> getItems() {
+    public ObservableArrayList<MoviePosterItemPresenter> getItems() {
         return mItems;
     }
 
@@ -33,7 +34,9 @@ public class MainPresenter extends BaseObservable {
         }).setOnSuccess(data -> {
             mLoadingVisibility.set(View.GONE);
             mItems.clear();
-            mItems.addAll(data.getPopularMovies());
+            for(IMovieDetails details : data){
+                mItems.add(new MoviePosterItemPresenter(details));
+            }
         }).setOnError(throwable -> {
             mLoadingVisibility.set(View.GONE);
             new AlertDialog.Builder(context)

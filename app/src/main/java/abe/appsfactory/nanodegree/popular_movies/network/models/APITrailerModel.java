@@ -1,11 +1,14 @@
 package abe.appsfactory.nanodegree.popular_movies.network.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.TrailerModel;
 
 @SuppressWarnings("unused")
-public class APITrailerModel extends TrailerModel {
+public class APITrailerModel extends TrailerModel implements Parcelable{
     @SerializedName("id")
     private String id;
     @SerializedName("iso_639_1")
@@ -22,6 +25,44 @@ public class APITrailerModel extends TrailerModel {
     private Integer size;
     @SerializedName("type")
     private String type;
+
+    private APITrailerModel(Parcel in) {
+        id = in.readString();
+        iso6391 = in.readString();
+        iso31661 = in.readString();
+        key = in.readString();
+        name = in.readString();
+        site = in.readString();
+        type = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(iso6391);
+        dest.writeString(iso31661);
+        dest.writeString(key);
+        dest.writeString(name);
+        dest.writeString(site);
+        dest.writeString(type);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<APITrailerModel> CREATOR = new Creator<APITrailerModel>() {
+        @Override
+        public APITrailerModel createFromParcel(Parcel in) {
+            return new APITrailerModel(in);
+        }
+
+        @Override
+        public APITrailerModel[] newArray(int size) {
+            return new APITrailerModel[size];
+        }
+    };
 
     public String getId() {
         return id;

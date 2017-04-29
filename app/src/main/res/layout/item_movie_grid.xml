@@ -6,11 +6,11 @@
 
         <variable
             name="item"
-            type="abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel"/>
+            type="abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterItemPresenter"/>
     </data>
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-               app:imageUrl="@{item.posterUrl}"
+               app:imageUrl="@{item.mPosterUrl}"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:src="@drawable/placeholder"
