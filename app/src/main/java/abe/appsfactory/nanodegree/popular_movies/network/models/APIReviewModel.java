@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import abe.appsfactory.nanodegree.popular_movies.presenter.model.ReviewModel;
+import abe.appsfactory.nanodegree.popular_movies.logic.models.IReviewModel;
 
 @SuppressWarnings("unused")
-class APIReviewModel extends ReviewModel implements Parcelable{
+class APIReviewModel implements IReviewModel, Parcelable {
 
     @SerializedName("id")
     private String id;

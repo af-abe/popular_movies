@@ -1,16 +1,11 @@
-package abe.appsfactory.nanodegree.popular_movies.persistance.models;
+package abe.appsfactory.nanodegree.popular_movies.ui.activities.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
-@SuppressWarnings("unused")
-public class DbMovieDetailsModel extends RealmObject implements IMovieDetails {
-
-    @PrimaryKey
+public class MovieIntentModel implements IMovieDetails, Parcelable {
     private int mId;
 
     private String mPosterPath;
@@ -23,11 +18,7 @@ public class DbMovieDetailsModel extends RealmObject implements IMovieDetails {
 
     private float mVoteAverage;
 
-
-    public DbMovieDetailsModel() {
-    }
-
-    public DbMovieDetailsModel(IMovieDetails details) {
+    public MovieIntentModel(IMovieDetails details) {
         mId = details.getMovieId();
         mPosterPath = details.getPosterUrl();
         mOverview = details.getOverview();
@@ -36,7 +27,7 @@ public class DbMovieDetailsModel extends RealmObject implements IMovieDetails {
         mVoteAverage = details.getVoteAverage();
     }
 
-    private DbMovieDetailsModel(Parcel in) {
+    private MovieIntentModel(Parcel in) {
         mId = in.readInt();
         mPosterPath = in.readString();
         mOverview = in.readString();
@@ -60,15 +51,15 @@ public class DbMovieDetailsModel extends RealmObject implements IMovieDetails {
         return 0;
     }
 
-    public static final Creator<DbMovieDetailsModel> CREATOR = new Creator<DbMovieDetailsModel>() {
+    public static final Creator<MovieIntentModel> CREATOR = new Creator<MovieIntentModel>() {
         @Override
-        public DbMovieDetailsModel createFromParcel(Parcel in) {
-            return new DbMovieDetailsModel(in);
+        public MovieIntentModel createFromParcel(Parcel in) {
+            return new MovieIntentModel(in);
         }
 
         @Override
-        public DbMovieDetailsModel[] newArray(int size) {
-            return new DbMovieDetailsModel[size];
+        public MovieIntentModel[] newArray(int size) {
+            return new MovieIntentModel[size];
         }
     };
 

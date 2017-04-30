@@ -1,6 +1,8 @@
 package abe.appsfactory.nanodegree.popular_movies.logic.models;
 
-public interface IMovieDetails {
+import android.os.Parcelable;
+
+public interface IMovieDetails extends Parcelable {
     int getMovieId();
 
     String getPosterUrl();

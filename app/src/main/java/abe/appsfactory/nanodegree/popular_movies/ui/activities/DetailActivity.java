@@ -12,23 +12,37 @@ import android.widget.Toast;
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.ActivityDetailBinding;
 import abe.appsfactory.nanodegree.popular_movies.presenter.DetailPresenter;
+import abe.appsfactory.nanodegree.popular_movies.ui.activities.models.MovieIntentModel;
 import abe.appsfactory.nanodegree.popular_movies.ui.adapter.GenericGridRecyclerAdapter;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_DETAIL_MOVIE_ID = "extra.detailModel";
     private DetailPresenter mPresenter;
+    private MovieIntentModel mMovieIntentModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(EXTRA_DETAIL_MOVIE_ID)) {
-            int modelId = getIntent().getExtras().getInt(EXTRA_DETAIL_MOVIE_ID);
-            mPresenter = new DetailPresenter(this, getSupportLoaderManager(), modelId);
-            binding.setPresenter(mPresenter);
+
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            if (intent != null && intent.hasExtra(EXTRA_DETAIL_MOVIE_ID)) {
+                mMovieIntentModel = getIntent().getExtras().getParcelable(EXTRA_DETAIL_MOVIE_ID);
+                mPresenter = new DetailPresenter(this, getSupportLoaderManager(), mMovieIntentModel);
+                binding.setPresenter(mPresenter);
+            } else {
+                Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+            mMovieIntentModel = savedInstanceState.getParcelable(MovieIntentModel.class.getCanonicalName());
+            if (mMovieIntentModel != null) {
+                mPresenter = new DetailPresenter(mMovieIntentModel);
+                binding.setPresenter(mPresenter);
+                mPresenter.restoreState(savedInstanceState);
+            } else {
+                Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show();
+            }
         }
 
         setupTrailerGridView(binding.trailerList);
@@ -37,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setupTrailerGridView(RecyclerView recyclerView) {
         recyclerView.setAdapter(new GenericGridRecyclerAdapter<>(mPresenter.getTrailerItems(), R.layout.item_trailer));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_colums_trailer)));
     }
 
     private void setupReview(RecyclerView recyclerView) {
@@ -49,5 +63,14 @@ public class DetailActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mPresenter = null;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPresenter.saveState(outState);
+        if (mMovieIntentModel != null) {
+            outState.putParcelable(mMovieIntentModel.getClass().getCanonicalName(), mMovieIntentModel);
+        }
     }
 }

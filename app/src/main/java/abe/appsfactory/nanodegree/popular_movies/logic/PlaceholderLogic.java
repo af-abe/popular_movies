@@ -11,9 +11,7 @@ import abe.appsfactory.nanodegree.popular_movies.persistance.RealmHelper;
 
 public class PlaceholderLogic {
     public static List<? extends IMovieDetails> getMovies(boolean popular) throws Exception {
-        List<? extends IMovieDetails> list = TheMovieDBApi.getPopularMovies(popular).getPopularMovies();
-        RealmHelper.perstistMovies(list);
-        return list;
+        return TheMovieDBApi.getPopularMovies(popular).getPopularMovies();
     }
 
     public static APITrailerResults getTrailer(int id) throws Exception {
@@ -22,5 +20,9 @@ public class PlaceholderLogic {
 
     public static APIReviewResult getRevies(int id) throws Exception {
         return TheMovieDBApi.getReviews(id);
+    }
+
+    public static List<? extends IMovieDetails> getMoviesFavorites() {
+        return RealmHelper.getAllMovies();
     }
 }

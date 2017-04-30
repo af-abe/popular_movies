@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import abe.appsfactory.nanodegree.popular_movies.presenter.model.TrailerModel;
+import abe.appsfactory.nanodegree.popular_movies.logic.models.ITrailerModel;
 
 @SuppressWarnings("unused")
-public class APITrailerModel extends TrailerModel implements Parcelable{
+public class APITrailerModel implements Parcelable, ITrailerModel{
     @SerializedName("id")
     private String id;
     @SerializedName("iso_639_1")
@@ -139,7 +139,7 @@ public class APITrailerModel extends TrailerModel implements Parcelable{
     }
 
     @Override
-    protected String getYoutubeKey() {
+    public String getYoutubeKey() {
         return key;
     }
 }

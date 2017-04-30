@@ -17,22 +17,22 @@
             style="@style/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/space_normal"
             android:text="@string/settings"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minWidth="350dp"
+            android:minWidth="@dimen/settings_dialog_min_width"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/space_normal">
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Sorting:"/>
+                android:layout_marginTop="@dimen/space_normal"
+                android:text="@string/show_me"/>
 
             <RadioGroup
                 android:id="@+id/radio_group"
@@ -44,21 +44,27 @@
                     android:checked="@={presenter.mPopular}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="most popular"/>
+                    android:text="@string/most_popular"/>
 
                 <RadioButton
                     android:checked="@={presenter.mRated}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="highest-rated"/>
+                    android:text="@string/highest_rated"/>
+
+                <RadioButton
+                    android:checked="@={presenter.mFavorites}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_favorites"/>
             </RadioGroup>
 
 
             <android.support.v7.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="accept"
+                android:layout_marginTop="@dimen/space_normal"
+                android:text="@string/settings_dialog_accept"
                 android:onClick="@{() -> presenter.onAccept(context)}"
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/colorPrimary"/>
@@ -66,7 +72,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="dismiss"
+                android:text="@string/settings_dialog_dismiss"
                 android:onClick="@{() -> presenter.onDismiss()}"
                 android:textColor="@android:color/white"
                 app:backgroundTint="@color/colorPrimary"/>

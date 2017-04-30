@@ -9,7 +9,7 @@ import abe.appsfactory.nanodegree.popular_movies.BuildConfig;
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
 
 @SuppressWarnings("unused")
-public class APIMovieDetailsModel implements Parcelable, IMovieDetails {
+public class APIMovieDetailsModel implements IMovieDetails {
     @SerializedName("poster_path")
     private String mPosterPath;
 

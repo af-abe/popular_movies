@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.databinding.ActivityMainBinding;
+import abe.appsfactory.nanodegree.popular_movies.logic.SortLogic;
 import abe.appsfactory.nanodegree.popular_movies.presenter.MainPresenter;
 import abe.appsfactory.nanodegree.popular_movies.ui.adapter.GenericGridRecyclerAdapter;
 import abe.appsfactory.nanodegree.popular_movies.ui.fragments.SettingsDialogFragment;
@@ -32,19 +33,31 @@ public class MainActivity extends AppCompatActivity {
 
         setupMovieGridView(mBinding.movieGrid);
 
-        mPresenter.loadMovies(this, getSupportLoaderManager());
+        if (savedInstanceState == null) {
+            mPresenter.loadMovies(this, getSupportLoaderManager());
+        } else {
+            mPresenter.restoreState(savedInstanceState);
+        }
     }
 
     private void setupMovieGridView(RecyclerView recyclerView) {
         recyclerView.setAdapter(new GenericGridRecyclerAdapter<>(mPresenter.getItems(), R.layout.item_movie_grid));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_colums)));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(SortLogic.getInstance(this).getSort() == SortLogic.SORT_FAVORITES){
+            mPresenter.loadMovies(this, getSupportLoaderManager());
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mBinding.movieGrid.setAdapter(null);
-        mPresenter = null;
+        mBinding = null;
     }
 
     @Override
@@ -72,5 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void notifySort() {
         mPresenter.loadMovies(this, getSupportLoaderManager());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mPresenter.saveState(outState);
     }
 }

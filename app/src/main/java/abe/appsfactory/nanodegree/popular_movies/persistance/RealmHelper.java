@@ -9,23 +9,39 @@ import io.realm.Realm;
 
 public class RealmHelper {
 
-    public static void perstistMovies(List<? extends IMovieDetails> list) {
+    public static void persistMovie(IMovieDetails model) {
         Realm realm = Realm.getDefaultInstance();
-        final List<DbMovieDetailsModel> insertList = new ArrayList<>();
-        for(IMovieDetails details : list){
-            insertList.add(new DbMovieDetailsModel(details));
-        }
-        realm.executeTransactionAsync(bgRealm -> bgRealm.copyToRealm(insertList));
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(new DbMovieDetailsModel(model));
+        realm.commitTransaction();
         realm.close();
     }
 
-    public static IMovieDetails getMovieById(int id){
+    public static boolean hasMovieWithId(int id) {
         Realm realm = Realm.getDefaultInstance();
         DbMovieDetailsModel dbModel = realm.where(DbMovieDetailsModel.class).equalTo("mId", id).findFirst();
-        IMovieDetails result = null;
-        if(dbModel != null){
-            result = realm.copyFromRealm(dbModel);
+        realm.close();
+
+        return dbModel != null;
+    }
+
+    public static void removeMovie(IMovieDetails model) {
+        Realm realm = Realm.getDefaultInstance();
+        DbMovieDetailsModel dbModel = realm.where(DbMovieDetailsModel.class).equalTo("mId", model.getMovieId()).findFirst();
+        realm.beginTransaction();
+        dbModel.deleteFromRealm();
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public static List<? extends IMovieDetails> getAllMovies() {
+        Realm realm = Realm.getDefaultInstance();
+        List<DbMovieDetailsModel> dbModels = realm.where(DbMovieDetailsModel.class).findAll();
+        List<IMovieDetails> result = new ArrayList<>();
+        if (dbModels != null) {
+            result.addAll(realm.copyFromRealm(dbModels));
         }
+        realm.close();
         return result;
     }
 }
