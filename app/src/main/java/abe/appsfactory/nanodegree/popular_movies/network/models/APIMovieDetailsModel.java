@@ -1,15 +1,14 @@
 package abe.appsfactory.nanodegree.popular_movies.network.models;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import abe.appsfactory.nanodegree.popular_movies.BuildConfig;
-import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel;
+import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
 
 @SuppressWarnings("unused")
-public class MovieDetailsModel extends MoviePosterModel implements Parcelable {
+public class APIMovieDetailsModel implements IMovieDetails {
     @SerializedName("poster_path")
     private String mPosterPath;
 
@@ -40,7 +39,7 @@ public class MovieDetailsModel extends MoviePosterModel implements Parcelable {
     @SerializedName("vote_average")
     private float mVoteAverage;
 
-    private MovieDetailsModel(Parcel in) {
+    private APIMovieDetailsModel(Parcel in) {
         mPosterPath = in.readString();
         mAdult = in.readByte() != 0;
         mOverview = in.readString();
@@ -72,15 +71,15 @@ public class MovieDetailsModel extends MoviePosterModel implements Parcelable {
         return 0;
     }
 
-    public static final Creator<MovieDetailsModel> CREATOR = new Creator<MovieDetailsModel>() {
+    public static final Creator<APIMovieDetailsModel> CREATOR = new Creator<APIMovieDetailsModel>() {
         @Override
-        public MovieDetailsModel createFromParcel(Parcel in) {
-            return new MovieDetailsModel(in);
+        public APIMovieDetailsModel createFromParcel(Parcel in) {
+            return new APIMovieDetailsModel(in);
         }
 
         @Override
-        public MovieDetailsModel[] newArray(int size) {
-            return new MovieDetailsModel[size];
+        public APIMovieDetailsModel[] newArray(int size) {
+            return new APIMovieDetailsModel[size];
         }
     };
 
@@ -122,6 +121,11 @@ public class MovieDetailsModel extends MoviePosterModel implements Parcelable {
 
     public float getVoteAverage() {
         return mVoteAverage;
+    }
+
+    @Override
+    public int getMovieId() {
+        return mId;
     }
 
     @Override

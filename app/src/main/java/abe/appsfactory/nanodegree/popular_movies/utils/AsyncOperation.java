@@ -10,6 +10,7 @@ import android.support.v4.content.Loader;
 
 /**
  * wraps a loader
+ *
  * @param <T> result Object
  */
 
@@ -18,7 +19,7 @@ public class AsyncOperation<T> {
     private OnSuccess<T> mSuccess;
     private OnError mError;
 
-    public AsyncOperation(Context context, LoaderManager loaderManager, int loaderId, BackgroundTask<T> task){
+    public AsyncOperation(Context context, LoaderManager loaderManager, int loaderId, BackgroundTask<T> task) {
         mTask = loaderManager.restartLoader(loaderId, null, new LoaderManager.LoaderCallbacks<T>() {
             @Override
             public Loader<T> onCreateLoader(int id, Bundle args) {
@@ -32,7 +33,7 @@ public class AsyncOperation<T> {
             @Override
             public void onLoadFinished(Loader<T> loader, T data) {
                 if (mSuccess != null && data != null) {
-                    mSuccess.onSuccess(data);
+                    new Handler(Looper.getMainLooper()).post(() -> mSuccess.onSuccess(data));
                 }
             }
 
@@ -43,34 +44,34 @@ public class AsyncOperation<T> {
         });
     }
 
-    public AsyncOperation setOnSuccess(OnSuccess<T> success){
+    public AsyncOperation setOnSuccess(OnSuccess<T> success) {
         mSuccess = success;
         return this;
     }
 
-    public AsyncOperation setOnError(OnError error){
+    public AsyncOperation setOnError(OnError error) {
         mError = error;
         return this;
     }
 
-    public void execute(){
+    public void execute() {
         if (mTask != null) {
             mTask.forceLoad();
         }
     }
 
     @FunctionalInterface
-    public interface BackgroundTask<T>{
+    public interface BackgroundTask<T> {
         T doInBackground() throws Exception;
     }
 
     @FunctionalInterface
-    public interface OnSuccess<T>{
+    public interface OnSuccess<T> {
         void onSuccess(T data);
     }
 
     @FunctionalInterface
-    public interface OnError{
+    public interface OnError {
         void onError(Throwable throwable);
     }
 }
