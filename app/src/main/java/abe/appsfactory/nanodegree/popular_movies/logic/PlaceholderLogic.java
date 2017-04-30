@@ -5,7 +5,6 @@ import java.util.List;
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
 import abe.appsfactory.nanodegree.popular_movies.network.TheMovieDBApi;
 import abe.appsfactory.nanodegree.popular_movies.network.models.APIReviewResult;
-import abe.appsfactory.nanodegree.popular_movies.network.models.APIPopularMoviesResponseModel;
 import abe.appsfactory.nanodegree.popular_movies.network.models.APITrailerResults;
 import abe.appsfactory.nanodegree.popular_movies.persistance.RealmHelper;
 

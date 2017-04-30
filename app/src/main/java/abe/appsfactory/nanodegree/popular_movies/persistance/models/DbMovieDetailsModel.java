@@ -1,7 +1,6 @@
 package abe.appsfactory.nanodegree.popular_movies.persistance.models;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
 import io.realm.RealmObject;

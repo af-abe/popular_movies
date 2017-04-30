@@ -9,6 +9,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class SortLogic {
 
+    @SuppressWarnings("WeakerAccess")
     @Retention(SOURCE)
     @IntDef({SORT_POPULAR, SORT_RATED, SORT_FAVORITES})
     public @interface ShowFormat {
