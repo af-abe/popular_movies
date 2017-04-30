@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableInt;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
