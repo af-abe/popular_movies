@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class PopularMoviesResponseModel {
+public class APIPopularMoviesResponseModel {
     @SerializedName("page")
     private int mCurrentPage;
     @SerializedName("results")
-    private List<MovieDetailsModel> mPopularMovies;
+    private List<APIMovieDetailsModel> mPopularMovies;
     @SerializedName("total_results")
     private int mTotalResults;
     @SerializedName("total_pages")
@@ -19,7 +19,7 @@ public class PopularMoviesResponseModel {
         return mCurrentPage;
     }
 
-    public List<MovieDetailsModel> getPopularMovies() {
+    public List<APIMovieDetailsModel> getPopularMovies() {
         return mPopularMovies;
     }
 

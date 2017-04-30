@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,63 +10,134 @@
             type="abe.appsfactory.nanodegree.popular_movies.presenter.DetailPresenter" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/placeholder"
-                app:imageUrl="@{presenter.mPosterUrl}" />
+                android:layout_margin="@dimen/space_small">
 
-            <LinearLayout
-                android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/placeholder"
+                            app:imageUrl="@{presenter.posterUrl}"
+                            tools:ignore="ContentDescription" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/space_small"
+                            android:onClick="@{() -> presenter.onClickFav()}">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="@string/favorite"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:minHeight="25dp"
+                                android:adjustViewBounds="true"
+                                android:src="@android:drawable/btn_star_big_off"
+                                tools:ignore="ContentDescription"
+                                app:setFavorite="@{presenter.mIsFavorite}"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_normal"
+                        android:layout_marginStart="@dimen/space_normal"
+                        android:layout_marginTop="@dimen/space_normal"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/space_small"
+                            android:text='@{"Title: " + presenter.title}' />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/space_small"
+                            android:text='@{"User Rating: " + presenter.rating}' />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/space_small"
+                            android:text='@{"Release Date: : " + presenter.releaseDate}' />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/space_small"
+                            android:text='@{presenter.overview}' />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_marginStart="@dimen/space_normal"
+                android:text="@string/trailer"
+                android:textSize="@dimen/headline" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_small"
-                    tools:text="Title: Movie"
-                    android:text='@{"Title: " + presenter.mTitle}' />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/trailer_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_small"
-                    tools:text="Rating: over 9000"
-                    android:text='@{"User Rating: " + presenter.mRating}' />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_marginStart="@dimen/space_normal"
+                android:text="@string/reviews"
+                android:textSize="@dimen/headline" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_small"
-                    tools:text="Release: yesterday"
-                    android:text='@{"Release Date: : " + presenter.mReleaseDate}' />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/review_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_small" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_small"
-                    tools:text="overview"
-                    android:text='@{presenter.mOverview}' />
-
-            </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

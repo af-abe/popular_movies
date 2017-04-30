@@ -3,14 +3,11 @@ package abe.appsfactory.nanodegree.popular_movies.utils;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-/**
- * Created by andrebauml on 29.04.17.
- */
-public class MyLoader<D> extends AsyncTaskLoader<D> {
+class MyLoader<D> extends AsyncTaskLoader<D> {
     private final AsyncOperation.OnError mError;
-    AsyncOperation.BackgroundTask<D> mTask;
+    private AsyncOperation.BackgroundTask<D> mTask;
 
-    public MyLoader(Context context, AsyncOperation.BackgroundTask<D> task, AsyncOperation.OnError error) {
+    MyLoader(Context context, AsyncOperation.BackgroundTask<D> task, AsyncOperation.OnError error) {
         super(context);
         mTask = task;
         mError = error;

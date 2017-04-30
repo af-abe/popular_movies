@@ -1,39 +1,52 @@
 package abe.appsfactory.nanodegree.popular_movies.presenter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.databinding.BaseObservable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableInt;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.logic.PlaceholderLogic;
 import abe.appsfactory.nanodegree.popular_movies.logic.SortLogic;
-import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterModel;
+import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
+import abe.appsfactory.nanodegree.popular_movies.presenter.model.MoviePosterItemPresenter;
 import abe.appsfactory.nanodegree.popular_movies.utils.AsyncOperation;
 
 
-public class MainPresenter extends BaseObservable {
+public class MainPresenter extends BasePresenter {
     private static final int LOADER_ID = 0;
-    private ObservableArrayList<MoviePosterModel> mItems = new ObservableArrayList<>();
-    public ObservableInt mLoadingVisibility = new ObservableInt(View.GONE);
 
-    public ObservableArrayList<MoviePosterModel> getItems() {
+
+    private final ObservableArrayList<MoviePosterItemPresenter> mItems = new ObservableArrayList<>();
+    public final ObservableInt mLoadingVisibility = new ObservableInt(View.GONE);
+
+    public ObservableArrayList<MoviePosterItemPresenter> getItems() {
         return mItems;
     }
 
+    @SuppressLint("SwitchIntDef")
     public void loadMovies(final Context context, LoaderManager supportLoaderManager) {
         mLoadingVisibility.set(View.VISIBLE);
 
         new AsyncOperation<>(context, supportLoaderManager, LOADER_ID, () -> {
-            boolean popular = SortLogic.getInstance(context).getSort() == SortLogic.SORT_POPULAR;
-            return PlaceholderLogic.getMovies(popular);
+            switch (SortLogic.getInstance(context).getSort()) {
+                case SortLogic.SORT_POPULAR:
+                    return PlaceholderLogic.getMovies(true);
+                case SortLogic.SORT_RATED:
+                    return PlaceholderLogic.getMovies(false);
+            }
+            return PlaceholderLogic.getMoviesFavorites();
         }).setOnSuccess(data -> {
             mLoadingVisibility.set(View.GONE);
             mItems.clear();
-            mItems.addAll(data.getPopularMovies());
+            for (IMovieDetails details : data) {
+                mItems.add(new MoviePosterItemPresenter(details));
+            }
         }).setOnError(throwable -> {
             mLoadingVisibility.set(View.GONE);
             new AlertDialog.Builder(context)
@@ -45,5 +58,18 @@ public class MainPresenter extends BaseObservable {
                     }).setCancelable(false)
                     .show();
         }).execute();
+    }
+
+    @Override
+    public void saveState(Bundle out) {
+        out.putParcelableArrayList(MoviePosterItemPresenter.class.getCanonicalName(), mItems);
+    }
+
+    @Override
+    public void restoreState(Bundle state) {
+        ArrayList<MoviePosterItemPresenter> arrayList = state.getParcelableArrayList(MoviePosterItemPresenter.class.getCanonicalName());
+        if (arrayList != null) {
+            mItems.addAll(arrayList);
+        }
     }
 }
