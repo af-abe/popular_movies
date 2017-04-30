@@ -1,10 +1,12 @@
 package abe.appsfactory.nanodegree.popular_movies.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import abe.appsfactory.nanodegree.popular_movies.logic.models.ITrailerModel;
 import abe.appsfactory.nanodegree.popular_movies.persistance.RealmHelper;
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.ReviewItemPresenter;
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.TrailerItemPresenter;
+import abe.appsfactory.nanodegree.popular_movies.ui.activities.DetailActivity;
 import abe.appsfactory.nanodegree.popular_movies.ui.activities.models.MovieIntentModel;
 import abe.appsfactory.nanodegree.popular_movies.utils.AsyncOperation;
 
@@ -139,6 +142,16 @@ public class DetailPresenter extends BasePresenter {
             view.setImageResource(android.R.drawable.star_big_on);
         } else {
             view.setImageResource(android.R.drawable.star_big_off);
+        }
+    }
+
+    public void shareYouTube(Context context) {
+        if(mTrailerItems.size() > 0){
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Look!");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mTrailerItems.get(0).getYouTubeLink());
+            context.startActivity(Intent.createChooser(sharingIntent, "Select App"));
         }
     }
 }

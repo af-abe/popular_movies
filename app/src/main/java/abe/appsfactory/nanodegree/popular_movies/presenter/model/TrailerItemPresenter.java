@@ -68,7 +68,7 @@ public class TrailerItemPresenter extends BaseObservable implements ITrailerMode
 
     public void onClick(Context context){
         Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://www.youtube.com/embed/" + getYoutubeKey() +"?autoplay=1"));
+                Uri.parse(getYouTubeLink()));
         context.startActivity(i);
     }
 
@@ -88,5 +88,9 @@ public class TrailerItemPresenter extends BaseObservable implements ITrailerMode
     @Override
     public String getYoutubeKey() {
         return mYouTubeKey;
+    }
+
+    public String getYouTubeLink(){
+        return "https://www.youtube.com/embed/" + getYoutubeKey() +"?autoplay=1";
     }
 }
