@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private MainPresenter mPresenter;
     ActivityMainBinding mBinding;
 
+    public static boolean triggerReload = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(SortLogic.getInstance(this).getSort() == SortLogic.SORT_FAVORITES){
+        if(triggerReload){
             mPresenter.loadMovies(this, getSupportLoaderManager());
+            triggerReload = false;
         }
     }
 

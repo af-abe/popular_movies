@@ -49,7 +49,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/space_small"
-                            android:onClick="@{() -> presenter.onClickFav()}">
+                            android:onClick="@{() -> presenter.onClickFav(context)}">
 
                             <TextView
                                 android:layout_width="0dp"

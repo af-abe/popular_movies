@@ -41,7 +41,7 @@ public class MainPresenter extends BasePresenter {
                 case SortLogic.SORT_RATED:
                     return PlaceholderLogic.getMovies(false);
             }
-            return PlaceholderLogic.getMoviesFavorites();
+            return PlaceholderLogic.getMoviesFavorites(context);
         }).setOnSuccess(data -> {
             mLoadingVisibility.set(View.GONE);
             mItems.clear();

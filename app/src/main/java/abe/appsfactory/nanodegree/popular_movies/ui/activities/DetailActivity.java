@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             mMovieIntentModel = savedInstanceState.getParcelable(MovieIntentModel.class.getCanonicalName());
             if (mMovieIntentModel != null) {
-                mPresenter = new DetailPresenter(mMovieIntentModel);
+                mPresenter = new DetailPresenter(this, mMovieIntentModel);
                 binding.setPresenter(mPresenter);
                 mPresenter.restoreState(savedInstanceState);
             } else {

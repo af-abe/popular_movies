@@ -1,12 +1,14 @@
 package abe.appsfactory.nanodegree.popular_movies.logic;
 
+import android.content.Context;
+
 import java.util.List;
 
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
 import abe.appsfactory.nanodegree.popular_movies.network.TheMovieDBApi;
 import abe.appsfactory.nanodegree.popular_movies.network.models.APIReviewResult;
 import abe.appsfactory.nanodegree.popular_movies.network.models.APITrailerResults;
-import abe.appsfactory.nanodegree.popular_movies.persistance.RealmHelper;
+import abe.appsfactory.nanodegree.popular_movies.persistance.DaoHelper;
 
 public class PlaceholderLogic {
     public static List<? extends IMovieDetails> getMovies(boolean popular) throws Exception {
@@ -21,7 +23,7 @@ public class PlaceholderLogic {
         return TheMovieDBApi.getReviews(id);
     }
 
-    public static List<? extends IMovieDetails> getMoviesFavorites() {
-        return RealmHelper.getAllMovies();
+    public static List<? extends IMovieDetails> getMoviesFavorites(Context context) {
+        return DaoHelper.getAllMovies(context);
     }
 }

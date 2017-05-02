@@ -6,7 +6,6 @@ import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.widget.ImageView;
@@ -18,30 +17,24 @@ import abe.appsfactory.nanodegree.popular_movies.R;
 import abe.appsfactory.nanodegree.popular_movies.logic.PlaceholderLogic;
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IReviewModel;
 import abe.appsfactory.nanodegree.popular_movies.logic.models.ITrailerModel;
-import abe.appsfactory.nanodegree.popular_movies.persistance.RealmHelper;
+import abe.appsfactory.nanodegree.popular_movies.persistance.DaoHelper;
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.ReviewItemPresenter;
 import abe.appsfactory.nanodegree.popular_movies.presenter.model.TrailerItemPresenter;
-import abe.appsfactory.nanodegree.popular_movies.ui.activities.DetailActivity;
+import abe.appsfactory.nanodegree.popular_movies.ui.activities.MainActivity;
 import abe.appsfactory.nanodegree.popular_movies.ui.activities.models.MovieIntentModel;
 import abe.appsfactory.nanodegree.popular_movies.utils.AsyncOperation;
 
 public class DetailPresenter extends BasePresenter {
     private static final int LOADER_ID_TRAILER = 0;
     private static final int LOADER_ID_REVIEWS = 1;
-
-    //    public final ObservableField<String> mTitle = new ObservableField<>();
-//    public final ObservableField<String> mRating = new ObservableField<>();
-//    public final ObservableField<String> mReleaseDate = new ObservableField<>();
-//    public final ObservableField<String> mOverview = new ObservableField<>();
-//    public final ObservableField<String> mPosterUrl = new ObservableField<>();
     public final ObservableBoolean mIsFavorite = new ObservableBoolean(false);
     private final MovieIntentModel mModel;
 
     private final ObservableArrayList<TrailerItemPresenter> mTrailerItems = new ObservableArrayList<>();
     private final ObservableArrayList<ReviewItemPresenter> mReviewItems = new ObservableArrayList<>();
 
-    public DetailPresenter(MovieIntentModel model) {
-        mIsFavorite.set(RealmHelper.hasMovieWithId(model.getMovieId()));
+    public DetailPresenter(Context context, MovieIntentModel model) {
+        mIsFavorite.set(DaoHelper.hasMovieWithId(context, model.getMovieId()));
         mModel = model;
     }
 
@@ -54,7 +47,7 @@ public class DetailPresenter extends BasePresenter {
     }
 
     public DetailPresenter(final Context context, LoaderManager supportLoaderManager, MovieIntentModel model) {
-        mIsFavorite.set(RealmHelper.hasMovieWithId(model.getMovieId()));
+        mIsFavorite.set(DaoHelper.hasMovieWithId(context, model.getMovieId()));
         mModel = model;
         loadTrailer(context, supportLoaderManager);
         loadReviews(context, supportLoaderManager);
@@ -107,16 +100,16 @@ public class DetailPresenter extends BasePresenter {
         return mModel.getPosterUrl();
     }
 
-    public void onClickFav() {
+    public void onClickFav(Context context) {
         if (mIsFavorite.get()) {
-            RealmHelper.removeMovie(mModel);
+            DaoHelper.removeMovie(context, mModel);
             mIsFavorite.set(false);
         } else {
-            RealmHelper.persistMovie(mModel);
+            DaoHelper.persistMovie(context, mModel);
             mIsFavorite.set(true);
         }
+        MainActivity.triggerReload = true;
     }
-
 
     @Override
     public void saveState(Bundle out) {
@@ -137,8 +130,8 @@ public class DetailPresenter extends BasePresenter {
     }
 
     @BindingAdapter("setFavorite")
-    public static void setFavorite(ImageView view, boolean state){
-        if(state){
+    public static void setFavorite(ImageView view, boolean state) {
+        if (state) {
             view.setImageResource(android.R.drawable.star_big_on);
         } else {
             view.setImageResource(android.R.drawable.star_big_off);
@@ -146,7 +139,7 @@ public class DetailPresenter extends BasePresenter {
     }
 
     public void shareYouTube(Context context) {
-        if(mTrailerItems.size() > 0){
+        if (mTrailerItems.size() > 0) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Look!");

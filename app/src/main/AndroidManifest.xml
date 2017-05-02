@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.DetailActivity" />
+
+        <provider
+            android:name=".persistance.DbContentProvider"
+            android:authorities="abe.appsfactory.nanodegree.popular_movies.persistance" >
+        </provider>
     </application>
 
 </manifest>

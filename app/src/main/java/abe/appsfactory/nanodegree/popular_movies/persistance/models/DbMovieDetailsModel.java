@@ -3,13 +3,10 @@ package abe.appsfactory.nanodegree.popular_movies.persistance.models;
 import android.os.Parcel;
 
 import abe.appsfactory.nanodegree.popular_movies.logic.models.IMovieDetails;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 @SuppressWarnings("unused")
-public class DbMovieDetailsModel extends RealmObject implements IMovieDetails {
+public class DbMovieDetailsModel implements IMovieDetails {
 
-    @PrimaryKey
     private int mId;
 
     private String mPosterPath;
@@ -24,6 +21,15 @@ public class DbMovieDetailsModel extends RealmObject implements IMovieDetails {
 
 
     public DbMovieDetailsModel() {
+    }
+
+    public DbMovieDetailsModel(int id, String posterPath, String overview, String releaseDate, String title, float voteAverage) {
+        mId = id;
+        mPosterPath = posterPath;
+        mOverview = overview;
+        mReleaseDate = releaseDate;
+        mTitle = title;
+        mVoteAverage = voteAverage;
     }
 
     public DbMovieDetailsModel(IMovieDetails details) {
