@@ -1,7 +1,6 @@
 package abe.appsfactory.nanodegree.popular_movies.persistance;
 
 import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,11 +29,6 @@ public class DbContentProvider extends ContentProvider {
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
             + "/" + BASE_PATH);
 
-    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-            + "/movies";
-    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-            + "/movie";
-
     private MovieDataBaseHelper mOpenHelper;
 
     @Override
@@ -47,15 +41,13 @@ public class DbContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        // Uisng SQLiteQueryBuilder instead of query() method
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        // Set the table
         queryBuilder.setTables(TABLE);
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         Cursor cursor = queryBuilder.query(db, projection, selection,
                 selectionArgs, null, null, sortOrder);
-        // make sure that potential listeners are getting notified
+
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;

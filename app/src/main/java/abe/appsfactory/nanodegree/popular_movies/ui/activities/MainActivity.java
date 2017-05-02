@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(triggerReload){
+        if(triggerReload && SortLogic.getInstance(this).getSort() == SortLogic.SORT_FAVORITES){
             mPresenter.loadMovies(this, getSupportLoaderManager());
             triggerReload = false;
         }
